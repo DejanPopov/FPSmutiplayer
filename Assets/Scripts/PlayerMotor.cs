@@ -11,8 +11,12 @@ public class PlayerMotor : MonoBehaviour
 
     private Vector3 velocityZ = Vector3.zero;
     private Vector3 rotationZ = Vector3.zero;
-    private Vector3 cameraRotationZ = Vector3.zero;
+    private float cameraRotationZ = 0f;
+    private float currentCameraRotationZ = 0f;
     private Vector3 thrusterForceZ = Vector3.zero;
+
+    [SerializeField]
+    private float cameraRotationLimit = 85f;
 
     private Rigidbody rb;
 
@@ -33,7 +37,7 @@ public class PlayerMotor : MonoBehaviour
         rotationZ = rotation;
     }
 
-    public void RotateCamera(Vector3 cameraRotation)
+    public void RotateCamera(float cameraRotation)
     {
         cameraRotationZ = cameraRotation;
     }
@@ -72,7 +76,14 @@ public class PlayerMotor : MonoBehaviour
 
         if (cam != null)
         {
-            cam.transform.Rotate(-cameraRotationZ);
+            //Ovde pravimo da player ne moze da gleda oko sebe u svim pravcima 360 stepeni.
+            //Ako je inverted samo promenuti +=
+            currentCameraRotationZ -= cameraRotationZ;
+            currentCameraRotationZ = Mathf.Clamp(currentCameraRotationZ, -cameraRotationLimit,
+                cameraRotationLimit);
+
+            //Apply rotation to the transform of our camera
+            cam.transform.localEulerAngles = new Vector3(currentCameraRotationZ, 0f, 0f);
         }
     }
 }
