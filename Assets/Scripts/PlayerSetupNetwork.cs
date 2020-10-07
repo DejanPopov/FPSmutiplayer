@@ -10,9 +10,7 @@ public class PlayerSetupNetwork : NetworkBehaviour
     Camera sceneCamera;
 
     private void Start()
-    {
-        //Ovde proveravamo da li kontrolisemo igraca.Ako ga ne kontrolisemo onda ce on da ugasi sve 
-        //komponente (u smislu da se prikljucio drugi igrac,da se ne kopiraju potezi)
+    { 
         if (!isLocalPlayer)
         {
             for (int i = 0; i < componentsToDisable.Length; i++)
