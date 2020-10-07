@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]  //Unity ce znati kako da sacuva ovu klasu.
 public class PlayerWeapon
