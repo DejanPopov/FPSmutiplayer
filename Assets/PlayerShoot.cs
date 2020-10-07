@@ -1,11 +1,15 @@
 ﻿using UnityEngine.Networking;
 using UnityEngine;
 using Mirror;
+using System.Xml.Serialization;
 
 public class PlayerShoot : NetworkBehaviour
 {
+
+    private const string PLAYER_TAG = "Player";
+
     public PlayerWeapon weapon;
-    
+
     [SerializeField]
     private Camera cam;
 
@@ -29,14 +33,25 @@ public class PlayerShoot : NetworkBehaviour
         }
     }
 
+
+    [Client]
     void Shoot()
     {
         RaycastHit hit;
-        if (Physics.Raycast(cam.transform.position, 
-            cam.transform.forward, out hit, 
+        if (Physics.Raycast(cam.transform.position,
+            cam.transform.forward, out hit,
             weapon.range, mask))
         {
-            Debug.Log("We hit" + hit.collider.name);
+            if (hit.collider.tag == PLAYER_TAG)
+            {
+                CmdPlayerShot(hit.collider.name);
+            }
         }
+    }
+
+    [Command]
+    void CmdPlayerShot(string ID)
+    {
+        Debug.Log(ID + "has been shot!");
     }
 }

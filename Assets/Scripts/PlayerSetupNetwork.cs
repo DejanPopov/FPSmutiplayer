@@ -28,6 +28,15 @@ public class PlayerSetupNetwork : NetworkBehaviour
                 Camera.main.gameObject.SetActive(false);
             }
         }
+
+        RegisterPlayer();
+    }
+
+    void RegisterPlayer()
+    {
+        //Dodajemo igracu ID tako sto cemo string konkatenirati sa komponentom
+        string ID = "Player" + GetComponent<NetworkIdentity>().netId;
+        transform.name = ID;
     }
 
     void AsignRemoteLayer()

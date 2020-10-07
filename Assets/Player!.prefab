@@ -708,6 +708,8 @@ MonoBehaviour:
   - {fileID: 5125729189184807947}
   - {fileID: 5125729188146873313}
   - {fileID: 5125729188146873314}
+  - {fileID: -6887942957981991891}
+  remoteLayerName: RemotePlayer
 --- !u!114 &-1803887436210644079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -983,7 +985,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5125729189668548719}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.307, y: 0.1, z: 1.571}
+  m_LocalPosition: {x: 0.501, y: 0.1, z: 1.571}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children:
   - {fileID: 5125729189469040279}
