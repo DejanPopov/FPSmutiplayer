@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float lookSensitivity = 3;
 
+    [SerializeField]
+    private float thrusterForce = 1000f;
+
     private PlayerMotor motor;
 
     void Start()
@@ -47,7 +50,16 @@ public class PlayerController : MonoBehaviour
 
         Vector3 cameraRotation = new Vector3(xRotation , 0f, 0f) * lookSensitivity;
 
-        //Apply camera rotation
+        //Calculate thrust input player
         motor.RotateCamera(cameraRotation);
+
+        //Apply thruster force
+        Vector3 thrusterForceV = Vector3.zero;
+        if (Input.GetButton("Jump"))
+        {
+            thrusterForceV = Vector3.up * thrusterForce;
+        }
+        // Apply thruster force
+        motor.ApplyThruster(thrusterForceV);
     }
 }

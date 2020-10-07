@@ -12,6 +12,8 @@ public class PlayerMotor : MonoBehaviour
     private Vector3 velocityZ = Vector3.zero;
     private Vector3 rotationZ = Vector3.zero;
     private Vector3 cameraRotationZ = Vector3.zero;
+    private Vector3 thrusterForceZ = Vector3.zero;
+
     private Rigidbody rb;
 
     void Start()
@@ -36,6 +38,12 @@ public class PlayerMotor : MonoBehaviour
         cameraRotationZ = cameraRotation;
     }
 
+    //Get force vector for thruster
+    public void ApplyThruster(Vector3 thrusterForceV)
+    {
+        thrusterForceZ = thrusterForceV;
+    }
+
 
     void FixedUpdate()
     {
@@ -48,6 +56,11 @@ public class PlayerMotor : MonoBehaviour
         if(velocityZ != Vector3.zero) 
         {
             rb.MovePosition(rb.position + velocityZ * Time.fixedDeltaTime);
+        }
+
+        if(thrusterForceZ != Vector3.zero)
+        {
+            rb.AddForce(thrusterForceZ * Time.fixedDeltaTime, ForceMode.Acceleration);
         }
     }
     //Perform rotation
