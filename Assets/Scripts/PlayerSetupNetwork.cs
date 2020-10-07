@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
+[RequireComponent(typeof(Player))]
 public class PlayerSetupNetwork : NetworkBehaviour
 {
     [SerializeField]
@@ -11,15 +12,16 @@ public class PlayerSetupNetwork : NetworkBehaviour
     string remoteLayerName = "RemotePlayer";
 
     Camera sceneCamera;
+    
 
     private void Start()
-    { 
+    {
         if (!isLocalPlayer)
         {
             DisableComponents();
             AsignRemoteLayer();
         }
-        else   
+        else
         {
             sceneCamera = Camera.main;
             if (sceneCamera != null)
@@ -28,15 +30,15 @@ public class PlayerSetupNetwork : NetworkBehaviour
                 Camera.main.gameObject.SetActive(false);
             }
         }
-
-        RegisterPlayer();
     }
 
-    void RegisterPlayer()
+    public override void OnStartClient()
     {
-        //Dodajemo igracu ID tako sto cemo string konkatenirati sa komponentom
-        string ID = "Player" + GetComponent<NetworkIdentity>().netId;
-        transform.name = ID;
+        base.OnStartClient();
+        string netID = GetComponent<NetworkIdentity>().netId.ToString();
+        Player player = GetComponent<Player>();
+        //When player enters a game
+        GameManager.RegisterPlayer(netID, player);
     }
 
     void AsignRemoteLayer()
@@ -59,6 +61,9 @@ public class PlayerSetupNetwork : NetworkBehaviour
         {
             sceneCamera.gameObject.SetActive(true);
         }
+
+        //Disconnect player when dies 
+        GameManager.UnRegisterPlayer(transform.name);
     }
 
 }
