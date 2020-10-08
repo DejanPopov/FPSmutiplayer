@@ -30,6 +30,9 @@ public class PlayerSetupNetwork : NetworkBehaviour
                 Camera.main.gameObject.SetActive(false);
             }
         }
+
+        //Zovemo metodu iz Player klase
+        GetComponent<Player>().Setup();
     }
 
     public override void OnStartClient()
