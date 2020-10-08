@@ -57,6 +57,18 @@ public class Player : NetworkBehaviour
     {
         isDead = true;
 
+        //Disable
+        for (int i = 0; i < disableOnDeath.Length; i++)
+        {
+            disableOnDeath[i].enabled = false;
+        }
+        
+        Collider col = GetComponent<Collider>();
+        if (col != null)
+        {
+            col.enabled = false;
+        }
+
         Debug.Log(transform.name + "is Dead!");
 
     }
@@ -71,6 +83,13 @@ public class Player : NetworkBehaviour
         {
             disableOnDeath[i].enabled = wasEnabled[i];
         }
+
+        Collider col = GetComponent<Collider>();
+        if (col != null)
+        {
+            col.enabled = true;
+        }
+
     }
 }
  
