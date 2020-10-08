@@ -6,10 +6,19 @@ using UnityEngine.Networking;
 
 public class Player : NetworkBehaviour
 {
+    //To see if player is dead
+    [SyncVar]
+    private bool isDeadB = false; 
+    public bool isDead
+    {
+        get { return isDeadB; }
+        protected set { isDeadB = value; }
+    }
+
     [SerializeField]
     private int maxHealth = 100;
 
-    //Synhronizacija d aklijenti budu obavesteni 
+    //Synhronizacija da klijenti budu obavesteni 
     [SyncVar]
     private int currentHealth;
 
@@ -18,11 +27,28 @@ public class Player : NetworkBehaviour
         SetDefaults();    
     }
 
-    public void TakeDamage(int amount)
+
+    [ClientRpc]
+    public void RpcTakeDamage(int amount)
     {
+        if (isDead)
+            return;
         currentHealth -= amount;
 
         Debug.Log(transform.name + " now has " + currentHealth + "health!");
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        isDead = true;
+
+        Debug.Log(transform.name + "is Dead!");
+
     }
 
     public void SetDefaults()
@@ -30,3 +56,4 @@ public class Player : NetworkBehaviour
         currentHealth = maxHealth;
     }
 }
+ 
