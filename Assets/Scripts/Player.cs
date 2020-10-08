@@ -38,6 +38,7 @@ public class Player : NetworkBehaviour
         SetDefaults();    
     }
 
+    /*
     //Test if player dead,disable on compile in Unity
     private void Update()
     {
@@ -50,7 +51,7 @@ public class Player : NetworkBehaviour
             RpcTakeDamage(999999);
         }
     }
-
+    */
 
     [ClientRpc]
     public void RpcTakeDamage(int amount)
@@ -92,8 +93,8 @@ public class Player : NetworkBehaviour
 
     private IEnumerator Respawn()
     {
-        //Kada player umre,ceka 3 sekundi i krece respawn
-        yield return new WaitForSeconds(3f);
+        //Kada player umre,ceka 3 sekundi i krece respawn (preko MatchSettings)
+        yield return new WaitForSeconds(GameManager.instance.matchSettings.respawnTime);
         //Kada krene respawn,setuje se Default
         SetDefaults();
         Transform spawnPoint = NetworkManager.singleton.GetStartPosition();
