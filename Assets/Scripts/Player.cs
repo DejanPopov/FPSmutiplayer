@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections;
+
 
 public class Player : NetworkBehaviour
 {
