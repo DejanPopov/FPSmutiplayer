@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Collections;
 
 public class Player : NetworkBehaviour
 {
@@ -37,6 +38,7 @@ public class Player : NetworkBehaviour
         SetDefaults();    
     }
 
+    //Test if player dead,disable on compile in Unity
     private void Update()
     {
         if (!isLocalPlayer)
@@ -69,7 +71,7 @@ public class Player : NetworkBehaviour
     {
         isDead = true;
 
-        //Disable
+        //Disable components upon death
         for (int i = 0; i < disableOnDeath.Length; i++)
         {
             disableOnDeath[i].enabled = false;
@@ -83,6 +85,22 @@ public class Player : NetworkBehaviour
 
         Debug.Log(transform.name + "is Dead!");
 
+        //Respawn metoda
+        StartCoroutine(Respawn());
+    }
+
+
+    private IEnumerator Respawn()
+    {
+        //Kada player umre,ceka 3 sekundi i krece respawn
+        yield return new WaitForSeconds(3f);
+        //Kada krene respawn,setuje se Default
+        SetDefaults();
+        Transform spawnPoint = NetworkManager.singleton.GetStartPosition();
+        transform.position = spawnPoint.position;
+        transform.rotation = spawnPoint.rotation;
+
+        Debug.Log("Player respawn");
     }
 
     public void SetDefaults()
