@@ -890,6 +890,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   maxHealth: 100
+  disableOnDeath:
+  - {fileID: 5125729189184807947}
+  - {fileID: -6887942957981991891}
 --- !u!1 &5125729189469040278
 GameObject:
   m_ObjectHideFlags: 0

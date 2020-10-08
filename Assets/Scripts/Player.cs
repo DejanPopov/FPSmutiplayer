@@ -37,6 +37,18 @@ public class Player : NetworkBehaviour
         SetDefaults();    
     }
 
+    private void Update()
+    {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            RpcTakeDamage(999999);
+        }
+    }
+
 
     [ClientRpc]
     public void RpcTakeDamage(int amount)
