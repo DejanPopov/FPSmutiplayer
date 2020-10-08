@@ -63,7 +63,14 @@ public class Player : NetworkBehaviour
 
     public void SetDefaults()
     {
+        //Loop da se ukljuce componente
+        isDead = false;
         currentHealth = maxHealth;
+
+        for (int i = 0; i < disableOnDeath.Length; i++)
+        {
+            disableOnDeath[i].enabled = wasEnabled[i];
+        }
     }
 }
  
