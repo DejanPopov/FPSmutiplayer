@@ -1,18 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class MatchSettings : MonoBehaviour
+﻿[System.Serializable] //Mocicemo da manjeamo u Unity-u
+public class MatchSettings 
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public float respawnTime = 3f;
 }
