@@ -22,8 +22,18 @@ public class Player : NetworkBehaviour
     [SyncVar]
     private int currentHealth;
 
-     void Awake()
+    [SerializeField]
+    private Behaviour[] disableOnDeath;
+    private bool[] wasEnabled;
+
+     public void Setup()
     {
+        //Loop da se iskljuce komponente kada player is dead
+        wasEnabled = new bool[disableOnDeath.Length];
+        for (int i = 0; i < wasEnabled.Length; i++)
+        {
+            wasEnabled[i] = disableOnDeath[i].enabled;
+        }
         SetDefaults();    
     }
 
