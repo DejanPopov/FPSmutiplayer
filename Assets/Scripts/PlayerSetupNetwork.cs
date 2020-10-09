@@ -11,6 +11,12 @@ public class PlayerSetupNetwork : NetworkBehaviour
     [SerializeField]
     string remoteLayerName = "RemotePlayer";
 
+    [SerializeField]
+    string dontDrawLayerLane = "DontDraw";
+
+    [SerializeField]
+    GameObject playerGraphics;
+
     Camera sceneCamera;
     
 
@@ -29,10 +35,24 @@ public class PlayerSetupNetwork : NetworkBehaviour
                 //Disable camera if we are local player
                 Camera.main.gameObject.SetActive(false);
             }
+
+            //Disable player graphics for local player
+            //Metoda koja zove sama sebe (recursive method)
+            SetLayerRucursively(playerGraphics, LayerMask.NameToLayer(dontDrawLayerLane));
         }
 
         //Zovemo metodu iz Player klase
         GetComponent<Player>().Setup();
+    }
+
+    //This method calls itself (recursive method)
+    void SetLayerRucursively (GameObject obj, int newLayer)
+    {
+        obj.layer = newLayer;
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRucursively(child.gameObject, newLayer);
+        }
     }
 
     public override void OnStartClient()
