@@ -3,6 +3,7 @@ using UnityEngine;
 using Mirror;
 using System.Xml.Serialization;
 
+[RequireComponent(typeof(WeaponMnaager))]
 public class PlayerShoot : NetworkBehaviour
 {
 
@@ -10,19 +11,13 @@ public class PlayerShoot : NetworkBehaviour
   
 
     [SerializeField]
-    private PlayerWeapon weapon;
-
-    [SerializeField]
-    private GameObject weaponGFX;
-
-    [SerializeField]
-    private string weaponLayerName = "Weapon";
-
-    [SerializeField]
     private Camera cam;
 
     [SerializeField]
     private LayerMask mask;
+
+    private PlayerWeapon currentWeapon;
+    private WeaponMnaager weaponManager;
 
     private void Start()
     {
@@ -32,12 +27,16 @@ public class PlayerShoot : NetworkBehaviour
             this.enabled = false;
         }
 
+        weaponManager = GetComponent<WeaponMnaager>();
+
         //Weapon layer on second camera
-        weaponGFX.layer = LayerMask.NameToLayer(weaponLayerName);
+       //weaponGFX.layer = LayerMask.NameToLayer(weaponLayerName);
     }
 
     private void Update()
     {
+        currentWeapon = weaponManager.GetCurrentWeapon();
+
         if (Input.GetButtonDown("Fire1"))
         {
             Shoot();
@@ -51,11 +50,11 @@ public class PlayerShoot : NetworkBehaviour
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position,
             cam.transform.forward, out hit,
-            weapon.range, mask))
+            currentWeapon.range, mask))
         {
             if (hit.collider.tag == PLAYER_TAG)
             {
-                CmdPlayerShot(hit.collider.name, weapon.damage);
+                CmdPlayerShot(hit.collider.name, currentWeapon.damage);
             }
         }
     }
