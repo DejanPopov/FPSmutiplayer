@@ -408,12 +408,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  weapon:
-    name: Rifle
-    damage: 10
-    range: 100
-  weaponGFX: {fileID: 0}
-  weaponLayerName: Weapon
   cam: {fileID: 5125729188146873313}
   mask:
     serializedVersion: 2
@@ -486,6 +480,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e004950412fc254595451116e1fb1a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  weaponLayerName: Weapon
+  primaryWeapon:
+    name: Blaster
+    damage: 5
+    range: 100
 --- !u!1 &5125729189936443818
 GameObject:
   m_ObjectHideFlags: 0
