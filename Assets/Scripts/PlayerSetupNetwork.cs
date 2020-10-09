@@ -17,6 +17,10 @@ public class PlayerSetupNetwork : NetworkBehaviour
     [SerializeField]
     GameObject playerGraphics;
 
+    [SerializeField]
+    GameObject playerUIPrefab;
+    private GameObject playerUIInstance;
+
     Camera sceneCamera;
     
 
@@ -39,6 +43,10 @@ public class PlayerSetupNetwork : NetworkBehaviour
             //Disable player graphics for local player
             //Metoda koja zove sama sebe (recursive method)
             SetLayerRucursively(playerGraphics, LayerMask.NameToLayer(dontDrawLayerLane));
+
+            //Create playerUI
+            playerUIInstance = Instantiate(playerUIPrefab);
+            playerUIInstance.name = playerUIPrefab.name;
         }
 
         //Zovemo metodu iz Player klase
@@ -80,6 +88,8 @@ public class PlayerSetupNetwork : NetworkBehaviour
     //If we want to re-enable camera
     private void OnDisable()
     {
+        Destroy(playerUIInstance);
+
         if (sceneCamera != null)
         {
             sceneCamera.gameObject.SetActive(true);
