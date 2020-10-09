@@ -10,6 +10,9 @@ public class WeaponMnaager : NetworkBehaviour
     private string weaponLayerName = "Weapon";
 
     [SerializeField]
+    private Transform weaponHolder;
+
+    [SerializeField]
     private PlayerWeapon primaryWeapon;
 
     private PlayerWeapon currentWeapon;
@@ -28,5 +31,9 @@ public class WeaponMnaager : NetworkBehaviour
     void EquipWeapon (PlayerWeapon weapon)
     {
         currentWeapon = weapon;
+
+       GameObject weaponIns = (GameObject)Instantiate(weapon.graphics, 
+           weaponHolder.position, weaponHolder.rotation);
+        weaponIns.transform.SetParent(weaponHolder);
     }
 }
