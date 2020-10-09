@@ -35,5 +35,8 @@ public class WeaponMnaager : NetworkBehaviour
        GameObject weaponIns = (GameObject)Instantiate(weapon.graphics, 
            weaponHolder.position, weaponHolder.rotation);
         weaponIns.transform.SetParent(weaponHolder);
+
+        if (isLocalPlayer)
+            weaponIns.layer = LayerMask.NameToLayer(weaponLayerName);
     }
 }

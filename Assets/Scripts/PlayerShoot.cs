@@ -36,10 +36,24 @@ public class PlayerShoot : NetworkBehaviour
     private void Update()
     {
         currentWeapon = weaponManager.GetCurrentWeapon();
-
-        if (Input.GetButtonDown("Fire1"))
+        if (currentWeapon.fireRate <= 0)
         {
-            Shoot();
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Shoot();
+            }
+        }
+        else
+        {
+            //Fast firing, machine gun effect
+            if (Input.GetButtonDown("Fire1"))
+            {
+                InvokeRepeating("Shoot", 0f, 1f/currentWeapon.fireRate);
+            }
+            else if (Input.GetButtonUp("Fire1"))
+            {
+                CancelInvoke("Shoot");
+            }
         }
     }
 
@@ -47,6 +61,9 @@ public class PlayerShoot : NetworkBehaviour
     [Client]
     void Shoot()
     {
+        //Check if shooting
+        Debug.Log("Shooting!");
+
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position,
             cam.transform.forward, out hit,
